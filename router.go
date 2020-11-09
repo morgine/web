@@ -9,11 +9,11 @@ package web
 //
 //type Morgine interface {
 //	http.Handler
-//	Group(group *Group) Router
+//	group(group *group) Router
 //}
 //
 //type Engine interface {
-//	Group(name, comment, path string) Router
+//	group(name, comment, path string) Router
 //	Container() Container
 //	Matcher() Matcher
 //}
@@ -25,25 +25,25 @@ package web
 //}
 //
 //type Container interface {
-//	Groups() []*Group
-//	Routes(groupID int) []*Route
+//	Groups() []*group
+//	Routes(groupID int) []*route
 //	Filters() []Handler
 //}
 //
 //type Matcher interface {
-//	Add(route *Route)
-//	Routes() []*Route
-//	Match(method, path string) *Route
+//	Add(route *route)
+//	Routes() []*route
+//	Match(method, path string) *route
 //}
 //
-//type Group struct {
+//type group struct {
 //	ID      int
 //	Name    string
 //	Comment string
 //	Path    string
 //}
 //
-//type Route struct {
+//type route struct {
 //	Method   string
 //	Path     string
 //	Handlers []Handler
@@ -58,18 +58,18 @@ package web
 //}
 //
 //func (e *engine) Container() Container {
-//	c := &container{routes: map[int][]*Route{}}
+//	c := &container{routes: map[int][]*route{}}
 //	existsFilters := map[Handler]struct{}{}
 //	for _, g := range e.groups {
-//		c.groups = append(c.groups, &Group{
+//		c.groups = append(c.groups, &group{
 //			ID:      g.ID,
 //			Name:    g.Name,
 //			Comment: g.Comment,
 //			Path:    g.Path,
 //		})
-//		var routes []*Route
+//		var routes []*route
 //		for _, r := range g.Routes {
-//			routes = append(routes, &Route{
+//			routes = append(routes, &route{
 //				Method:   r.Method,
 //				Path:     filepath.FromSlash(filepath.Join(g.Path, r.Path)),
 //				Handlers: r.Handlers[:],
@@ -99,9 +99,9 @@ package web
 //	return m
 //}
 //
-//func (e *engine) Group(name, comment, path string) Router {
+//func (e *engine) group(name, comment, path string) Router {
 //	g := &group{
-//		Group: Group{
+//		group: group{
 //			ID:      len(e.groups) + 1,
 //			Name:    name,
 //			Comment: comment,
@@ -114,8 +114,8 @@ package web
 //}
 //
 //type group struct {
-//	Group
-//	Routes []*Route
+//	group
+//	Routes []*route
 //}
 //
 //func (r *group) Use(handlers ...Handler) Router {
@@ -130,7 +130,7 @@ package web
 //}
 //
 //func (r *group) Handle(method, path string, h Handler) {
-//	r.Routes = append(r.Routes, &Route{
+//	r.Routes = append(r.Routes, &route{
 //		Method:   method,
 //		Path:     path,
 //		Handlers: []Handler{h},
@@ -138,16 +138,16 @@ package web
 //}
 //
 //type container struct {
-//	groups  []*Group
-//	routes  map[int][]*Route
+//	groups  []*group
+//	routes  map[int][]*route
 //	filters []Handler
 //}
 //
-//func (c *container) Routes(groupID int) []*Route {
+//func (c *container) Routes(groupID int) []*route {
 //	return c.routes[groupID]
 //}
 //
-//func (c *container) Groups() []*Group {
+//func (c *container) Groups() []*group {
 //	return c.groups
 //}
 //
@@ -156,21 +156,21 @@ package web
 //}
 //
 //type matcher struct {
-//	methods   []*Route
-//	anonymous []*Route
-//	root      *Route
-//	all []*Route
+//	methods   []*route
+//	anonymous []*route
+//	root      *route
+//	all []*route
 //}
 //
 //func NewMatcher() Matcher {
 //	return &matcher{}
 //}
 //
-//func (m *matcher) Routes() []*Route {
+//func (m *matcher) Routes() []*route {
 //	return m.all
 //}
 //
-//func (m *matcher) Add(route *Route) {
+//func (m *matcher) Add(route *route) {
 //	if route.Method != "" {
 //		m.methods = append(m.methods, route)
 //	} else {
@@ -183,7 +183,7 @@ package web
 //	m.all = append(m.all, route)
 //}
 //
-//func (m *matcher) Match(method, path string) *Route {
+//func (m *matcher) Match(method, path string) *route {
 //	for _, route := range m.methods {
 //		if route.Method == method && matchPath(route.Path, path) {
 //			return route
@@ -230,7 +230,7 @@ package web
 //}
 //
 //func (r *conditionalHolder) Handle(method, path string, h Handler) {
-//	r.g.Routes = append(r.g.Routes, &Route{
+//	r.g.Routes = append(r.g.Routes, &route{
 //		Method:   method,
 //		Path:     path,
 //		Handlers: append(r.filters[:], h),

@@ -11,13 +11,13 @@ package web_test
 //func TestNewEngine(t *testing.T) {
 //	engine := web.NewEngine()
 //	type register struct {
-//		Group    *web.Group
+//		group    *web.group
 //		Filters  []*mockFilterHandler
 //		Handlers []*mockHandler
 //	}
 //	type groupCase struct {
 //		register    *register
-//		groupRoutes []*web.Route
+//		groupRoutes []*web.route
 //	}
 //	type routeCase struct {
 //		Method
@@ -25,7 +25,7 @@ package web_test
 //	groupCases := []*groupCase{
 //		{
 //			register: &register{
-//				Group: &web.Group{
+//				group: &web.group{
 //					ID:      1,
 //					Name:    "Admin Accounts",
 //					Comment: "provides admin accounts API",
@@ -45,7 +45,7 @@ package web_test
 //					},
 //				},
 //			},
-//			groupRoutes: []*web.Route{
+//			groupRoutes: []*web.route{
 //				{
 //					Method: "DELETE",
 //					Path: "/admin/picture",
@@ -64,7 +64,7 @@ package web_test
 //		},
 //		{
 //			register: &register{
-//				Group: &web.Group{
+//				group: &web.group{
 //					ID:      2,
 //					Name:    "User Accounts",
 //					Comment: "provides user accounts API",
@@ -90,7 +90,7 @@ package web_test
 //					},
 //				},
 //			},
-//			groupRoutes: []*web.Route{
+//			groupRoutes: []*web.route{
 //				{
 //					Method: "POST",
 //					Path: "/user/avatar",
@@ -122,7 +122,7 @@ package web_test
 //		},
 //	}
 //
-//	var needGroups = []*web.Group{
+//	var needGroups = []*web.group{
 //		{
 //			ID:      1,
 //			Name:    "Admin Accounts",
@@ -146,7 +146,7 @@ package web_test
 //	// 添加 groups, Filters, Handlers
 //	for _, c := range groupCases {
 //		r := c.register
-//		router := engine.Group(r.Group.Name, r.Group.Comment, r.Group.Path)
+//		router := engine.group(r.group.Name, r.group.Comment, r.group.Path)
 //		for _, mf := range r.Filters {
 //			router = router.Use(mf)
 //		}
